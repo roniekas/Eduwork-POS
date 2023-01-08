@@ -4,12 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-
+const productRoutes = require('./app/product/router')
+const categoryRoutes = require('./app/category/router')
+const tagsRoutes = require('./app/tags/router')
 
 var app = express();
 
 // view engine setup
-app.use(cors)
+app.use(cors())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -19,8 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// HOME
+// Product
+app.use('/api', productRoutes);
+app.use('/api', categoryRoutes);
+app.use('/api', tagsRoutes);
 
+
+// HOME
 app.use('/', function (req, res) {
   res.render('index', {
     title: 'Eduwork POS Services'
